@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
 import { AuthContext } from './Provider';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const Registration = () => {
     const { RegistrationUser } = useContext(AuthContext);
     const navigate = useNavigate();
-    
+    const location=useLocation();
+    const from = location.state?.from?.pathname || '/';
     const handleRegistration = async (e) => {
         e.preventDefault();
      
@@ -24,6 +25,8 @@ const Registration = () => {
                 showConfirmButton: false,
                 timer: 1500
               });
+              navigate(from, { replace: true }); 
+
             console.log(userResult)
         })
         .catch(error=>{
